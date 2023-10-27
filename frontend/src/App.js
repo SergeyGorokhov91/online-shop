@@ -1,14 +1,13 @@
 import './App.css';
 import Navigation from "./customer/components/navigation/Navigation";
-import MainCarousel from "./customer/components/HomeCarousel/MainCarousel";
+import HomePage from "./customer/pages/HomePage/HomePage";
 
 function App() {
   return (
-    <div className="App">
+    <div>
       <Navigation/>
-      <MainCarousel/>
       <div>
-        home
+        <HomePage/>
       </div>
     </div>
   );
