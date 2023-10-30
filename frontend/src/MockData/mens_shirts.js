@@ -1,4 +1,4 @@
-export  const  mens_carousel_home_menu = [
+export  const  mens_shirts = [
   {
     "imageUrl": "https://rukminim1.flixcart.com/image/612/612/l5h2xe80/kurta/x/6/n/xl-kast-tile-green-majestic-man-original-imagg4z33hu4kzpv.jpeg?q=70",
     "brand": "Majestic Man",
