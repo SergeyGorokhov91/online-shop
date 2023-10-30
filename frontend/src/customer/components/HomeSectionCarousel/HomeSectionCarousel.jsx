@@ -5,64 +5,71 @@ import {Button} from "@mui/material";
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 
 
-function HomeSectionCarousel() {
+function HomeSectionCarousel({data,sectionName}) {
   const responsive = {
     200: { items: 1 },
     420: { items: 2 },
     768: { items: 3 },
-    900: { items: 4 },
-    1200: { items: 5 },
-    1900: { items: 6 }
+    1200: { items: 5.5 },
+    1900: { items: 6.5 }
   };
 
-  const items = [1,1,1,1,1,1,1,1,1,1].map(()=><HomeSectionCard/>)
+  const items = data.slice(0,10).map((i)=><HomeSectionCard product={i}/>)
+
+  const renderNextButton = ({ isDisabled }) => isDisabled ? null : (
+    <Button
+      variant="contained"
+      className="
+                  z-50
+                  bg-white
+                  "
+      sx={{
+        position: "absolute",
+        top: "8rem",
+        right: "-1.2rem",
+        transform: "translateX(50%) rotate(90deg)",
+        bgcolor: "white",
+        color: "black"
+      }}
+      aria-label="next"
+    >
+      <KeyboardArrowLeftIcon sx={{ transform: "rotate(90deg)", color: "black" }} />
+    </Button>
+  );
+
+  const renderPrevButton = ({ isDisabled }) => isDisabled ? null : (
+    <Button
+      variant="contained"
+      className="
+                  z-50
+                  bg-white
+                  "
+      sx={{
+        position: "absolute",
+        top: "8rem",
+        left: "-1.2rem",
+        transform: "translateX(-50%) rotate(90deg)",
+        bgcolor: "white",
+        color: "black"
+      }}
+      aria-label="prev"
+    >
+      <KeyboardArrowLeftIcon sx={{ transform: "rotate(-90deg)", color: "black" }} />
+    </Button>
+  );
+
 
   return (
     <div className="border">
+      <h2 className="text-2xl font-extrabold text-gray-800 py-5">{sectionName}</h2>
       <div className="relative p-5">
         <AliceCarousel
           items={items}
-          disableButtonsControls
-          infinite
           responsive={responsive}
           disableDotsControls
+          renderPrevButton={renderPrevButton}
+          renderNextButton={renderNextButton}
         />
-        <Button variant="contained"
-                className="
-                z-50
-                bg-white
-                "
-                sx={{
-                  position:"absolute",
-                  top:"8rem",
-                  right:"0rem",
-                  transform:"translateX(50%) rotate(90deg)",
-                  bgcolor:"white"
-                }}
-                aria-label="next"
-        >
-          <KeyboardArrowLeftIcon sx={{
-            transform:"rotate(90deg)",
-            color:"black"}}/>
-        </Button>
-        <Button variant="contained"
-                className="
-                z-50
-                bg-white
-                "
-                sx={{
-                  position:"absolute",
-                  top:"8rem",
-                  left:"0rem",
-                  transform:"translateX(-50%) rotate(90deg)",
-                  bgcolor:"white"
-                }}
-                aria-label="next"
-        >
-          <KeyboardArrowLeftIcon sx={{
-            transform:"rotate(-90deg)",
-            color:"black"}}/>
-        </Button>
       </div>
     </div>
   );
