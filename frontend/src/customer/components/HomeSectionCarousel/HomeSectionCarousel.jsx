@@ -10,8 +10,8 @@ function HomeSectionCarousel({data,sectionName}) {
     200: { items: 1 },
     420: { items: 2 },
     768: { items: 3 },
-    1200: { items: 5.5 },
-    1900: { items: 6.5 }
+    1200: { items: 5.3 },
+    1900: { items: 6.3 }
   };
 
   const items = data.slice(0,10).map((i)=><HomeSectionCard product={i}/>)
@@ -26,7 +26,7 @@ function HomeSectionCarousel({data,sectionName}) {
       sx={{
         position: "absolute",
         top: "8rem",
-        right: "-1.2rem",
+        right: "-2.5rem",
         transform: "translateX(50%) rotate(90deg)",
         bgcolor: "white",
         color: "black"
@@ -47,7 +47,7 @@ function HomeSectionCarousel({data,sectionName}) {
       sx={{
         position: "absolute",
         top: "8rem",
-        left: "-1.2rem",
+        left: "-2.5rem",
         transform: "translateX(-50%) rotate(90deg)",
         bgcolor: "white",
         color: "black"
@@ -62,7 +62,7 @@ function HomeSectionCarousel({data,sectionName}) {
   return (
     <div className="border">
       <h2 className="text-2xl font-extrabold text-gray-800 py-5">{sectionName}</h2>
-      <div className="relative p-5">
+      <div className="relative px-10 py-5">
         <AliceCarousel
           items={items}
           responsive={responsive}
