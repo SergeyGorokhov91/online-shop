@@ -7,6 +7,7 @@ import ProductCard from "./ProductCard";
 import {filters, singleFilter} from "./FilterData";
 import {FormControl, FormControlLabel, Radio, RadioGroup} from "@mui/material";
 import FilterListIcon from '@mui/icons-material/FilterList';
+import {useLocation, useNavigate} from "react-router-dom";
 
 const sortOptions = [
   { name: 'Price: Low to High', href: '#', current: false },
@@ -23,6 +24,41 @@ function classNames(...classes) {
 export default function Product() {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
 
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleFilter = (value, sectionId) => {
+    // Создаем новый объект URLSearchParams на основе текущего URL-адреса
+    const searchParams = new URLSearchParams(location.search);
+
+    // Получаем все значения фильтра по данному идентификатору секции
+    let filterValue = searchParams.getAll(sectionId);
+
+    // Если значение фильтра уже существует в строке запроса, то удаляем его
+    if(filterValue.length > 0 && filterValue[0].split(",").includes(value)) {
+      // Разбиваем строку существующих значений по запятым и удаляем значение фильтра
+      filterValue = filterValue[0].split(",").filter(i => i !== value);
+      // Если после удаления значения фильтра не осталось, удаляем и сам идентификатор секции из строки запроса
+      if(filterValue.length === 0) {
+        searchParams.delete(sectionId);
+      }
+    } else {
+      // Если значение фильтра еще не существует в строке запроса, то добавляем его
+      filterValue.push(value);
+    }
+
+    // Если в строке запроса остались какие-либо значения фильтра, то обновляем URL веб-страницы с новой строкой запроса
+    if(filterValue.length > 0) {
+      // Обновляем/создаем параметр с идентификатором секции и со значением фильтра, отделенным запятой
+      searchParams.set(sectionId, filterValue.join(","));
+    }
+
+    // Собираем новую строку запроса
+    const query = searchParams.toString();
+    // Используем navigate для обновления URL-адреса соответствующей веб-страницы
+    navigate({ search: `?${query}` });
+  };
+  
   return (
     <div className="bg-white">
       <div>
@@ -254,6 +290,7 @@ export default function Product() {
                               {section.options.map((option, optionIdx) => (
                                 <div key={option.value} className="flex items-center">
                                   <input
+                                    onChange={()=>handleFilter(option.value, section.id)}
                                     id={`filter-${section.id}-${optionIdx}`}
                                     name={`${section.id}[]`}
                                     defaultValue={option.value}
