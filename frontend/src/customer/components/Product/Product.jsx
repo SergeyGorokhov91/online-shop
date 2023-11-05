@@ -58,7 +58,19 @@ export default function Product() {
     // Используем navigate для обновления URL-адреса соответствующей веб-страницы
     navigate({ search: `?${query}` });
   };
-  
+
+  const handleRadioFilterChange = (e,sectionId) => {
+    // Создаем новый объект URLSearchParams на основе текущего URL-адреса
+    const searchParams = new URLSearchParams(location.search);
+
+    searchParams.set(sectionId, e.target.value);
+
+    // Собираем новую строку запроса
+    const query = searchParams.toString();
+    // Используем navigate для обновления URL-адреса соответствующей веб-страницы
+    navigate({ search: `?${query}` });
+  }
+
   return (
     <div className="bg-white">
       <div>
@@ -336,11 +348,11 @@ export default function Product() {
                               <FormControl>
                                 <RadioGroup
                                   aria-labelledby="demo-radio-buttons-group-label"
-                                  defaultValue={section.options[0].value}
                                   name="radio-buttons-group"
                                 >
-                                  {section.options.map((option, optionIdx) => (
+                                  {section.options.map((option) => (
                                     <FormControlLabel
+                                      onClick={(e)=>handleRadioFilterChange(e,section.id)}
                                       value={option.value}
                                       control={<Radio />}
                                       label={option.label}
